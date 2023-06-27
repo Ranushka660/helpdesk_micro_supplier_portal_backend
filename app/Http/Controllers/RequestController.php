@@ -32,6 +32,8 @@ class RequestController extends Controller
                     'price' => $quotation_data->price,
                     'total_price' => $quotation_data->total_price,
                     'remark' => $quotation_data->remark,
+                    'exclusive_price' => $quotation_data->exclusive_price,
+                    'currency_type' => ($quotation_data->currency_type != '' && isset($quotation_data->currency_type->id))?$quotation_data->currency_type->id:1,
                 ]);
 
             array_push($data, json_decode($response_data, true));

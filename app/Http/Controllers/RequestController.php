@@ -35,7 +35,6 @@ class RequestController extends Controller
                     'exclusive_price' => $quotation_data->exclusive_price,
                     'currency_type' => ($quotation_data->currency_type != '' && isset($quotation_data->currency_type->id))?$quotation_data->currency_type->id:1,
                 ]);
-
             array_push($data, json_decode($response_data, true));
         }
 
@@ -43,9 +42,6 @@ class RequestController extends Controller
         $quotations = $client->service('api_gateway')
             ->post('/api/portal/quotation/acnkow', ['data' => $data]);
 
-        $quotations = json_decode($quotations, true);
-
-
-        return response()->json(['status' => 'success', 'Quotations' => $quotations], 201);
+        return response()->json(['status' => 'success', 'Quotations' => $data], 201);
     }
 }

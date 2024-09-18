@@ -26,9 +26,13 @@ class RequestController extends Controller
         foreach ($request_data as $quotation_data) {
             $client = new ApiRequest();
             $response_data = $client->service('procurement')
-                ->attach('quotation', Utils::tryFopen($request->file($quotation_data->quotation), 'r'))
-                ->attach('specification', Utils::tryFopen($request->file($quotation_data->specification), 'r'))
-                ->post('/api/quotation/' . $quotation_request, [
+                ->attach('quotation', Utils::tryFopen($request->file($quotation_data->quotation), 'r'));
+
+            if($quotation_data->specification != null){
+                $response_data->attach('specification', Utils::tryFopen($request->file($quotation_data->specification), 'r'));
+            }
+
+            $response_data = $response_data->post('/api/quotation/' . $quotation_request, [
                     'price' => $quotation_data->price,
                     'total_price' => $quotation_data->total_price,
                     'remark' => $quotation_data->remark,
